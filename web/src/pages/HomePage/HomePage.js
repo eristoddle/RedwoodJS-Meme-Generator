@@ -1,16 +1,61 @@
+import React, { useState, useEffect } from 'react'
 import { Link, routes } from '@redwoodjs/router'
+import html2canvas from 'html2canvas'
+
+const generateImage = (e) => {
+  e.preventDefault()
+  const element = document.getElementById('meme')
+  html2canvas(element).then(function (canvas) {
+    const myImage = canvas.toDataURL()
+    console.log(myImage)
+  })
+}
 
 const HomePage = () => {
+  const [image, setImage] = useState([])
+  const [topText, setTopText] = useState('')
+  const [bottomText, setBottomText] = useState('')
+
+  useEffect(() => {
+    fetch('https://api.imgflip.com/get_memes')
+      .then((response) => response.json())
+      .then((response) => {
+        const rand = Math.floor(Math.random() * 100 + 1)
+        setImage(response.data.memes[rand])
+      })
+  }, [])
+
+  console.log(topText, bottomText, image)
+
   return (
     <>
-      <h1>HomePage</h1>
-      <p>
-        Find me in <tt>./web/src/pages/HomePage/HomePage.js</tt>
-      </p>
-      <p>
-        My default route is named <tt>home</tt>, link to me with `
-        <Link to={routes.home()}>Home</Link>`
-      </p>
+      <h1>Meme Generator</h1>
+      <Link to={routes.home()}>Home</Link>
+      <div>
+        <form className="meme-form">
+          <input
+            type="text"
+            name="topText"
+            placeholder="Top Text"
+            value={topText}
+            onChange={(e) => setTopText(e.target.value)}
+          />
+          <input
+            type="text"
+            name="bottomText"
+            placeholder="Bottom Text"
+            value={bottomText}
+            onChange={(e) => setBottomText(e.target.value)}
+          />
+          <button onClick={generateImage}>Generate</button>
+        </form>
+
+        <div className="meme" id="meme">
+          <img src={image.url} alt="" />
+          <h2 className="top">{topText}</h2>
+          <h2 className="bottom">{bottomText}</h2>
+        </div>
+      </div>
     </>
   )
 }
