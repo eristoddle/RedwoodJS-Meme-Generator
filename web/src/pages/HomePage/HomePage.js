@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link, routes } from '@redwoodjs/router'
 import html2canvas from 'html2canvas'
+import MemeLayout from 'src/layouts/MemeLayout'
 
 const generateImage = (e) => {
   e.preventDefault()
@@ -28,9 +29,8 @@ const HomePage = () => {
   console.log(topText, bottomText, image)
 
   return (
-    <>
+    <MemeLayout>
       <h1>Meme Generator</h1>
-      <Link to={routes.home()}>Home</Link>
       <div>
         <form className="meme-form">
           <input
@@ -56,7 +56,7 @@ const HomePage = () => {
           <h2 className="bottom">{bottomText}</h2>
         </div>
       </div>
-    </>
+    </MemeLayout>
   )
 }
 

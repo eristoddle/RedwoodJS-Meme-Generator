@@ -1,5 +1,17 @@
 body {
   margin: 0;
+}
+
+header ul li {
+  display:inline;
+  padding: 50px;
+}
+
+.sitename {
+  font-size: xx-large;
+}
+
+article {
   text-align: center;
 }
 

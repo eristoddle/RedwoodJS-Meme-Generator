@@ -1,11 +1,11 @@
 import { render } from '@redwoodjs/testing'
 
-import ImagePage from './ImagePage'
+import MemesPage from './MemesPage'
 
-describe('ImagePage', () => {
+describe('MemesPage', () => {
   it('renders successfully', () => {
     expect(() => {
-      render(<ImagePage />)
+      render(<MemesPage />)
     }).not.toThrow()
   })
 })
