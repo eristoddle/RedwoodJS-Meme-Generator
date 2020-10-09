@@ -1,6 +1,8 @@
 import { Link, routes } from '@redwoodjs/router'
+import { useAuth } from '@redwoodjs/auth'
 
 const MemeLayout = ({ children }) => {
+  const { logIn } = useAuth()
   return (
     <>
       <header>
@@ -11,6 +13,9 @@ const MemeLayout = ({ children }) => {
             </li>
             <li>
               <Link to={routes.memes()}>Your Memes</Link>
+            </li>
+            <li>
+              <button onClick={logIn}>Login</button>
             </li>
           </ul>
         </nav>

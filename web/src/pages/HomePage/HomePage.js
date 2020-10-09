@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { Link, routes } from '@redwoodjs/router'
 import html2canvas from 'html2canvas'
 import MemeLayout from 'src/layouts/MemeLayout'
 
