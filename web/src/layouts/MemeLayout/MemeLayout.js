@@ -2,7 +2,7 @@ import { Link, routes } from '@redwoodjs/router'
 import { useAuth } from '@redwoodjs/auth'
 
 const MemeLayout = ({ children }) => {
-  const { logIn } = useAuth()
+  const { logIn, logOut, isAuthenticated } = useAuth()
   return (
     <>
       <header>
@@ -15,7 +15,9 @@ const MemeLayout = ({ children }) => {
               <Link to={routes.memes()}>Your Memes</Link>
             </li>
             <li>
-              <button onClick={logIn}>Login</button>
+              <button href="#" onClick={isAuthenticated ? logOut : logIn}>
+                {isAuthenticated ? 'Log Out' : 'Log In'}
+              </button>
             </li>
           </ul>
         </nav>

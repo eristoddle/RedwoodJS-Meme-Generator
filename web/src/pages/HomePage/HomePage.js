@@ -1,20 +1,14 @@
 import React, { useState, useEffect } from 'react'
+import { useAuth } from '@redwoodjs/auth'
 import html2canvas from 'html2canvas'
 import MemeLayout from 'src/layouts/MemeLayout'
-
-const generateImage = (e) => {
-  e.preventDefault()
-  const element = document.getElementById('meme')
-  html2canvas(element).then(function (canvas) {
-    const myImage = canvas.toDataURL()
-    console.log(myImage)
-  })
-}
 
 const HomePage = () => {
   const [image, setImage] = useState([])
   const [topText, setTopText] = useState('')
   const [bottomText, setBottomText] = useState('')
+  const { logIn, isAuthenticated, currentUser } = useAuth()
+  console.log(currentUser)
 
   useEffect(() => {
     fetch('https://api.imgflip.com/get_memes')
@@ -24,6 +18,19 @@ const HomePage = () => {
         setImage(response.data.memes[rand])
       })
   }, [])
+
+  const generateImage = (e) => {
+    e.preventDefault()
+    if (!isAuthenticated) {
+      logIn()
+    } else {
+      const element = document.getElementById('meme')
+      html2canvas(element).then(function (canvas) {
+        const myImage = canvas.toDataURL()
+        console.log(myImage)
+      })
+    }
+  }
 
   console.log(topText, bottomText, image)
 

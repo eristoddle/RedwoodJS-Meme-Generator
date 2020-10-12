@@ -71,7 +71,7 @@ article {
   height: 3em;
 }
 
-.meme-form>button {
+button {
   height: 2.1em;
   width: 8em;
   margin-top: 1em;
@@ -83,6 +83,6 @@ article {
   background: rgb(32, 39, 138);
 }
 
-.meme-form>button:hover {
+button:hover {
   background: rgba(32, 39, 138, 0.8);
 }
