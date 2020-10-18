@@ -28,6 +28,8 @@ const HomePage = () => {
       })
   }, [])
 
+  console.log(currentUser)
+
   const generateImage = (e) => {
     e.preventDefault()
     if (!isAuthenticated) {
@@ -51,10 +53,10 @@ const HomePage = () => {
         })
         .then((response) => response.json())
         .then((data) => {
-          const { sub } = currentUser
+          const { email } = currentUser
           const { url } = data
           const input = {
-            userId: sub,
+            userId: email,
             image: url,
           }
           create({ variables: { input } })
