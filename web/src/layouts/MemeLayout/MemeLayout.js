@@ -12,7 +12,7 @@ const MemeLayout = ({ children }) => {
               <Link to={routes.home()}>Meme Generator</Link>
             </li>
             <li>
-              <Link to={routes.memes()}>Your Memes</Link>
+              <Link to={routes.memes()}>All Memes</Link>
             </li>
             <li>
               <button href="#" onClick={isAuthenticated ? logOut : logIn}>

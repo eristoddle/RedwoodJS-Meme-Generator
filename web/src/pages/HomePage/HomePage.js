@@ -33,7 +33,7 @@ const HomePage = () => {
       logIn()
     } else {
       const element = document.getElementById('meme')
-      html2canvas(element)
+      html2canvas(element, { allowTaint: true, useCORS: true })
         .then((canvas) => {
           const base64Image = canvas.toDataURL()
           const { sub } = currentUser

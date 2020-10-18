@@ -1,17 +1,11 @@
-import { Link, routes } from '@redwoodjs/router'
 import MemeLayout from 'src/layouts/MemeLayout'
+import MemesCell from 'src/components/MemesCell'
 
 const MemesPage = () => {
   return (
     <MemeLayout>
-      <h1>MemesPage</h1>
-      <p>
-        Find me in <tt>./web/src/pages/MemesPage/MemesPage.js</tt>
-      </p>
-      <p>
-        My default route is named <tt>memes</tt>, link to me with `
-        <Link to={routes.memes()}>Memes</Link>`
-      </p>
+      <h1>All Memes</h1>
+      <MemesCell />
     </MemeLayout>
   )
 }
