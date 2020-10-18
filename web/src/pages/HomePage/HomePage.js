@@ -12,10 +12,11 @@ const CREATE_MEME = gql`
   }
 `
 const HomePage = () => {
+  const { logIn, isAuthenticated, currentUser } = useAuth()
   const [image, setImage] = useState([])
   const [topText, setTopText] = useState('')
   const [bottomText, setBottomText] = useState('')
-  const { logIn, isAuthenticated, currentUser } = useAuth()
+  const [displaySuccess, setDisplaySuccess] = useState(false)
   const [create] = useMutation(CREATE_MEME)
 
   useEffect(() => {
@@ -36,13 +37,31 @@ const HomePage = () => {
       html2canvas(element, { allowTaint: true, useCORS: true })
         .then((canvas) => {
           const base64Image = canvas.toDataURL()
+          const formData = new FormData()
+          formData.append('file', base64Image)
+          formData.append('api_key', process.env.CLOUDINARY_API_KEY)
+          formData.append('upload_preset', process.env.CLOUDINARY_UPLOAD_PRESET)
+          return fetch(
+            `https://api.cloudinary.com/v1_1/${process.env.CLOUDINARY_CLOUD_NAME}/image/upload`,
+            {
+              method: 'POST',
+              body: formData,
+            }
+          )
+        })
+        .then((response) => response.json())
+        .then((data) => {
           const { sub } = currentUser
-          const data = {
+          const { url } = data
+          const input = {
             userId: sub,
-            image: base64Image,
+            image: url,
           }
-          create({ variables: { input: data } })
-          console.log(data)
+          create({ variables: { input } })
+          setDisplaySuccess(true)
+          setTimeout(() => {
+            setDisplaySuccess(false)
+          }, 3000)
         })
         .catch((error) => {
           console.error('Error:', error)
@@ -71,6 +90,10 @@ const HomePage = () => {
           />
           <button onClick={generateImage}>Generate</button>
         </form>
+
+        <div style={{ display: displaySuccess ? 'block' : 'none' }}>
+          Meme Created!
+        </div>
 
         <div className="meme" id="meme">
           <img src={image.url} alt="" />
