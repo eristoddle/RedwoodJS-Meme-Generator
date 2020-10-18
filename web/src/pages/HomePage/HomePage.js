@@ -28,8 +28,6 @@ const HomePage = () => {
       })
   }, [])
 
-  console.log(currentUser)
-
   const generateImage = (e) => {
     e.preventDefault()
     if (!isAuthenticated) {
@@ -44,7 +42,7 @@ const HomePage = () => {
           formData.append('api_key', process.env.CLOUDINARY_API_KEY)
           formData.append('upload_preset', process.env.CLOUDINARY_UPLOAD_PRESET)
           return fetch(
-            `https://api.cloudinary.com/v1_1/${process.env.CLOUDINARY_CLOUD_NAME}/image/upload`,
+            `https://api.cloudinary.com/v1_1/dxynccz7l/image/upload`,
             {
               method: 'POST',
               body: formData,
