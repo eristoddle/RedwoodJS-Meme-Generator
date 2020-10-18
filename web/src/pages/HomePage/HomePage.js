@@ -2,13 +2,21 @@ import React, { useState, useEffect } from 'react'
 import { useAuth } from '@redwoodjs/auth'
 import html2canvas from 'html2canvas'
 import MemeLayout from 'src/layouts/MemeLayout'
+import { useMutation } from '@redwoodjs/web'
 
+const CREATE_MEME = gql`
+  mutation CreateMemeMutation($input: CreateMemeInput!) {
+    createMeme(input: $input) {
+      id
+    }
+  }
+`
 const HomePage = () => {
   const [image, setImage] = useState([])
   const [topText, setTopText] = useState('')
   const [bottomText, setBottomText] = useState('')
   const { logIn, isAuthenticated, currentUser } = useAuth()
-  console.log(currentUser)
+  const [create] = useMutation(CREATE_MEME)
 
   useEffect(() => {
     fetch('https://api.imgflip.com/get_memes')
@@ -25,14 +33,22 @@ const HomePage = () => {
       logIn()
     } else {
       const element = document.getElementById('meme')
-      html2canvas(element).then(function (canvas) {
-        const myImage = canvas.toDataURL()
-        console.log(myImage)
-      })
+      html2canvas(element)
+        .then((canvas) => {
+          const base64Image = canvas.toDataURL()
+          const { sub } = currentUser
+          const data = {
+            userId: sub,
+            image: base64Image,
+          }
+          create({ variables: { input: data } })
+          console.log(data)
+        })
+        .catch((error) => {
+          console.error('Error:', error)
+        })
     }
   }
-
-  console.log(topText, bottomText, image)
 
   return (
     <MemeLayout>

@@ -2,7 +2,7 @@ datasource DS {
   // optionally set multiple providers
   // example: provider = ["sqlite", "postgresql"]
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url = "***"
 }
 
 generator client {
@@ -12,7 +12,7 @@ generator client {
 
 model Meme {
   id        Int      @id @default(autoincrement())
-  userId    String
+  userId    Int
   image     String
   createdAt DateTime @default(now())
 }
