@@ -39,8 +39,7 @@ const HomePage = () => {
           const base64Image = canvas.toDataURL()
           const formData = new FormData()
           formData.append('file', base64Image)
-          formData.append('api_key', process.env.CLOUDINARY_API_KEY)
-          formData.append('upload_preset', process.env.CLOUDINARY_UPLOAD_PRESET)
+          formData.append('upload_preset', 'smemytto')
           return fetch(
             `https://api.cloudinary.com/v1_1/dxynccz7l/image/upload`,
             {
